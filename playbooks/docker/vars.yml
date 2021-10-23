@@ -1,0 +1,14 @@
+---
+firewall_flush_rules_and_chains: false
+firewall_allowed_tcp_ports:
+- "22"
+- "80"
+- "2376"
+- "2375"
+docker_users: ["vagrant"]
+docker_daemon_options:
+  storage-driver: "devicemapper"
+  debug: true
+  storage-opts: ["dm.basesize=40G","dm.use_deferred_deletion=true","dm.use_deferred_removal=true"]
+  hosts: ["tcp://192.168.60.4:2375"]
+docker__daemon_flags: ""
