@@ -5,10 +5,17 @@ firewall_allowed_tcp_ports:
 - "80"
 - "2376"
 - "2375"
+pip_install_packages:
+ - name: docker
 docker_users: ["vagrant"]
 docker_daemon_options:
   storage-driver: "devicemapper"
   debug: true
   storage-opts: ["dm.basesize=40G","dm.use_deferred_deletion=true","dm.use_deferred_removal=true"]
-  hosts: ["tcp://192.168.60.4:2375"]
+  hosts: ["fd://","{{ host_daemon_tcp }}"]
+  tls: true
+  tlscert: "/etc/docker/server-cert.pem"
+  tlskey: "/etc/docker/server-key.pem"
+  tlscacert: "/etc/docker/ca.pem"
+  tlsverify: true
 docker__daemon_flags: ""

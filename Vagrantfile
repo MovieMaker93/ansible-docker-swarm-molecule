@@ -2,6 +2,7 @@
 # vi: set ft=ruby :
 
 VAGRANTFILE_API_VERSION = "2"
+N = 2
 
 # Install vagrant-disksize to allow resizing the vagrant box disk.
 unless Vagrant.has_plugin?("vagrant-disksize")
@@ -19,23 +20,19 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     v.linked_clone = true
   end
   
-  config.vm.define "master" do |app|
-    app.vm.hostname = "master"
-    app.vm.network :private_network, ip: "192.168.60.4"
-  end
+  (1..N).each do |machine_id|
+    config.vm.define "centOS#{machine_id}" do |machine|
+      machine.vm.hostname = "centOS#{machine_id}"
+      machine.vm.network "private_network", ip: "192.168.60.#{3+machine_id}"
 
-  #config.vm.define "slave" do |app|
-    # app.vm.hostname = "slave"
-   #  app.vm.network :private_network, ip: "192.168.60.5"
-  #end
-
-
-
-  # Ansible provisioner.
-  config.vm.provision :ansible do |ansible|
-    ansible.inventory_path = "inventory/inventory"
-    ansible.playbook = "configure.yml"
-    ansible.limit = "all"
-    ansible.become = true
-  end
+      if machine_id == N
+        machine.vm.provision :ansible do |ansible|
+          ansible.inventory_path = "inventory/inventory.ini"
+          ansible.playbook = "configure.yml"
+          ansible.limit = "all"
+          ansible.become = true
+        end
+      end
+    end
+  end  
 end
