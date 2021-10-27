@@ -22,7 +22,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   
   (1..N).each do |machine_id|
     config.vm.define "centOS#{machine_id}" do |machine|
-      machine.vm.hostname = "centOS#{machine_id}"
+      machine.vm.hostname = "centOS-#{machine_id}"
       machine.vm.network "private_network", ip: "192.168.60.#{3+machine_id}"
 
       if machine_id == N

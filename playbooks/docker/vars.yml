@@ -4,7 +4,7 @@ firewall_allowed_tcp_ports:
 - "22"
 - "80"
 - "2376"
-- "2375"
+- "2377"
 pip_install_packages:
  - name: docker
 docker_users: ["vagrant"]

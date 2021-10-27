@@ -1,4 +1,4 @@
-- hosts: manager
+- hosts: docker_swarm_manager
   become: yes
 
   vars_files:

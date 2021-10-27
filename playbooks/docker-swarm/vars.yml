@@ -1,0 +1,12 @@
+---
+
+##
+# Docker Swarm
+##
+
+
+# You can set any interface, that is listened by docker engine.
+# e.g. docker_swarm_interface: "eth1"
+docker_swarm_interface: "{{ ansible_default_ipv4['interface'] }}"
+docker_swarm_addr: "{{ groups['docker_swarm_manager'][0] }}"
+docker_swarm_port: 2377

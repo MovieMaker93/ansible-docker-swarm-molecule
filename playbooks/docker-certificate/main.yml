@@ -1,4 +1,4 @@
-- hosts: manager:worker
+- hosts: all
   become: yes
 
   vars_files:
@@ -22,5 +22,3 @@
          
   roles:
     - role: alexinthesky.secure-docker-daemon
-
-- import_playbook: manager-certificate.yml
