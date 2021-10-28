@@ -19,6 +19,7 @@
       loop:
         - "/etc/docker"
         - "/etc/systemd/system/docker.service.d"
+        - "/var/lib/postgresql/data"
          
   roles:
     - role: alexinthesky.secure-docker-daemon

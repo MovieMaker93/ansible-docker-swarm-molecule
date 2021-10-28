@@ -3,3 +3,4 @@
 - import_playbook: playbooks/docker/main.yml
 - import_playbook: playbooks/docker-certificate/manager-certificate.yml
 - import_playbook: playbooks/docker-swarm/main.yml
+- import_playbook: playbooks/docker-example-app-swarm/deploy_stack_playbook.yml

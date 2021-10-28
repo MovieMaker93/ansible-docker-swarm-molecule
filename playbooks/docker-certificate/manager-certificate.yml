@@ -10,6 +10,8 @@
         src: "{{dds_client_cert_path}}/{{ item }}"
         dest: "~/.docker/"
         flat: yes
+        force: yes
+      when: "inventory_hostname == groups['docker_swarm_manager'][0]"
       with_items:
         - ca.pem
         - cert.pem

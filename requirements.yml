@@ -4,3 +4,5 @@ roles:
   - name: geerlingguy.docker
   - name: alexinthesky.secure-docker-daemon
   - name: geerlingguy.pip
+collections:
+- name: community.docker

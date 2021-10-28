@@ -1,0 +1,5 @@
+---
+- hosts: docker_swarm_manager
+  become: yes
+  tasks:
+    - include_tasks: deploy_example_ghost_stack.yml

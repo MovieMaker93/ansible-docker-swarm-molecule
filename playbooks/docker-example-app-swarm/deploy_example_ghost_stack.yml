@@ -1,0 +1,20 @@
+---
+- name: Copying example ghost app's docker-compose.yml file on the server
+  # https://docs.ansible.com/ansible/latest/modules/copy_module.html
+  copy:
+    src: "./docker-compose.yml"
+    dest: "/home/{{ ansible_user }}/docker-compose.yml"
+    owner: "{{ ansible_user }}"
+    group: "{{ ansible_user }}"
+    mode: u=rw,g=rw,o=r
+    force: yes
+  when: "inventory_hostname == groups['docker_swarm_manager'][0]"
+
+- name: Deploying example ghost app's stack
+  # https://docs.ansible.com/ansible/latest/modules/docker_stack_module.html
+  docker_stack:
+    state: present
+    name: "{{ STACK_NAME | default('example_voting_app') }}"
+    compose:
+      - "/home/{{ ansible_user }}/docker-compose.yml"
+  when: "inventory_hostname == groups['docker_swarm_manager'][0]"

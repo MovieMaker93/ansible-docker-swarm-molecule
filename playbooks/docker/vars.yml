@@ -5,8 +5,11 @@ firewall_allowed_tcp_ports:
 - "80"
 - "2376"
 - "2377"
+- "2368"
 pip_install_packages:
  - name: docker
+ - name: jsondiff
+ - name: pyyaml
 docker_users: ["vagrant"]
 docker_daemon_options:
   storage-driver: "devicemapper"
@@ -19,3 +22,4 @@ docker_daemon_options:
   tlscacert: "/etc/docker/ca.pem"
   tlsverify: true
 docker__daemon_flags: ""
+docker_package: "docker-{{ docker_edition }}-20.10.10"
