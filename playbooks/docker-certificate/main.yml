@@ -9,6 +9,7 @@
       package:
         name: "{{ openssl_packages }}"
         state: present
+        
     - name: Create Docker configuration directories
       file:
         path: "{{ item }}"
