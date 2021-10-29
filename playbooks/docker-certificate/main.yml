@@ -9,7 +9,7 @@
       package:
         name: "{{ openssl_packages }}"
         state: present
-        
+
     - name: Create Docker configuration directories
       file:
         path: "{{ item }}"
@@ -21,6 +21,6 @@
         - "/etc/docker"
         - "/etc/systemd/system/docker.service.d"
         - "/var/lib/postgresql/data"
-         
+
   roles:
     - role: alexinthesky.secure-docker-daemon

@@ -3,11 +3,11 @@
 
   vars_files:
     - vars.yml
-    
+
   tasks:
     - name: Copy Client Certificate Files to local machine
       fetch:
-        src: "{{dds_client_cert_path}}/{{ item }}"
+        src: "{{ dds_client_cert_path }}/{{ item }}"
         dest: "~/.docker/"
         flat: yes
         force: yes
