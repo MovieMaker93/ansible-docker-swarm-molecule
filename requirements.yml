@@ -1,8 +1,3 @@
 ---
-roles:
-  - name: geerlingguy.firewall
-  - name: geerlingguy.docker
-  - name: alexinthesky.secure-docker-daemon
-  - name: geerlingguy.pip
 collections:
-- name: community.docker
+  - name: community.docker
