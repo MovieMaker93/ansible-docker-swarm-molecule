@@ -1,4 +1,4 @@
-name: CI - Ansible Lint and Molecule
+name: build
 
 on: [push, pull_request]
 
@@ -31,3 +31,24 @@ jobs:
         # [optional]
         # Arguments to be passed to the ansible-lint
         args: ""
+  
+  molecule:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        distro:
+          - centos7
+  
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          path: "${{ github.repository }}"
+      - name: Molecule
+        uses: gofrolist/molecule-action@v2
+        with:
+          molecule_command: test
+        env:
+          ANSIBLE_FORCE_COLOR: '1'
+          PY_COLORS: '1'
+          MOLECULE_DISTRO: ${{ matrix.distro }}

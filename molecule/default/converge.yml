@@ -20,4 +20,5 @@
       changed_when: false
       failed_when: systemctl_status.rc > 1
 
-- import_playbook: ../../configure.yml
+- import_playbook: ../../playbooks/docker-certificate/main.yml
+

@@ -13,6 +13,15 @@ provisioner:
   name: ansible
   env:
     ANSIBLE_CONFIG: ../../ansible.cfg
-    ANSIBLE_ROLES_PATH: "../../roles"
+    ANSIBLE_ROLES_PATH: ../../roles
   playbooks:
     converge: ${MOLECULE_PLAYBOOK:-converge.yml}
+
+scenario:
+  test_sequence:
+    - dependency
+    - destroy
+    - syntax
+    - create
+    - converge
+    - destroy
