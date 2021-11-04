@@ -39,7 +39,7 @@ ansible-galaxy install -r requirements.txt
 ```
 ## Ansible Configuration
 ### Project Structure
-The core of ansible configuration is defined inside **configure.yml**: 
+The core of ansible configuration is defined inside **configure.yml**:  
 ```yml
 ---
 - import_playbook: playbooks/docker-certificate/main.yml
@@ -48,24 +48,25 @@ The core of ansible configuration is defined inside **configure.yml**:
 - import_playbook: playbooks/docker-swarm/main.yml
 - import_playbook: playbooks/docker-example-app-swarm/deploy_stack_playbook.yml
 ```
-This file imports all the custom playbooks that are located in the **playbooks** folder.
-All the roles are inside the folder **roles**.
+This file imports all the custom playbooks that are located in the **playbooks** folder.  
+All the roles are inside the folder **roles**.  
 The project used four roles:
 1. geerlingguy.docker
 2. geerlingguy.pip
 3. geerlingguy.firewall
 4. alexinthesky.secure-docker-daemon
 
-The **geerlingguy.docker** and **alexinthesky.secure-docker-daemon** have been customized to meet my requirements, so I have putted the roles inside a custom directory and not install directly via galaxy.
-The **geerlingguy.docker** and **alexinthesky.secure-docker-daemon** have been customized to meet my requirements, so I have put the roles inside a custom directory and not install directly via Galaxy.
-Also I have defined the **roles_path** and the **inventory** directory inside the **ansible.cfg** file.
+The **geerlingguy.docker** and **alexinthesky.secure-docker-daemon** have been customized to meet my requirements, so I have putted the roles inside a custom directory and not install directly via galaxy.  
+The **geerlingguy.docker** and **alexinthesky.secure-docker-daemon** have been customized to meet my requirements, so I have put the roles inside a custom directory and not install directly via Galaxy.  
+Also I have defined the **roles_path** and the **inventory** directory inside the **ansible.cfg** file.  
 
 ### Docker certficate
-First of all, ansible will run the docker-certificate playbook for securing docker via TLS encryption. There is a pre-task configuration to ensure that the OpenSSL package and all the folders required for docker have been installed.  
-The role **alexinthesky.secure-docker-daemon** generates all the server and client keys with OpenSSL for the docker daemon.   
-In the end, ansible will copy the client key of your first node manager to your local machine.
+First of all, ansible will run the docker-certificate playbook for securing docker via TLS encryption.   
+There is a pre-task configuration to ensure that the OpenSSL package and all the folders required for docker have been installed.    
+The role **alexinthesky.secure-docker-daemon** generates all the server and client keys with OpenSSL for the docker daemon.    
+In the end, ansible will copy the client key of your first node manager to your local machine.  
 ### Docker configuration
-The second playbook will configure docker with daemon secured via **TLS**. The docker daemon configuration is specifed in the vars.yml file under the docker folder:
+The second playbook will configure docker with daemon secured via **TLS**. The docker daemon configuration is specifed in the vars.yml file under the docker folder:  
 ```yml
 docker_daemon_options:
   storage-driver: "devicemapper"
@@ -78,20 +79,20 @@ docker_daemon_options:
   tlscacert: "/etc/docker/ca.pem"
   tlsverify: true
 ```
-The **storage.opts** ensures a base size for docker of at least 40GB, then the **tls** configuration defines the key, and the hosts of docker daemon (you can contact the daemon on the machine itself or via HTTPS from outside passing the proper client key).
-To contact docker daemon manager from your local machine, you have to configure:
+The **storage.opts** ensures a base size for docker of at least 40GB, then the **tls** configuration defines the key, and the hosts of docker daemon (you can contact the daemon on the machine itself or via HTTPS from outside passing the proper client key).  
+To contact docker daemon manager from your local machine, you have to configure:  
 
-``` EXPORT DOCKER_TLS_VERIFY = 1 ```
-``` EXPORT DOCKER_HOST = tcp://<ip_of_your_first_manager>:2376 ```
+``` EXPORT DOCKER_TLS_VERIFY = 1 ```  
+``` EXPORT DOCKER_HOST = tcp://<ip_of_your_first_manager>:2376 ```  
 
-By default, the previous playbook will copy the client.key in the **~/.docker**, so you can run all the docker commands without specifying the exact path of the client keys.
-Be sure to run ``` docker info ``` and see if you can contact the daemon without any problem.
-Also, a firewall configuration on the VMs will close all the ports not needed for our purpose.
+By default, the previous playbook will copy the client.key in the **~/.docker**, so you can run all the docker commands without specifying the exact path of the client keys.  
+Be sure to run ``` docker info ``` and see if you can contact the daemon without any problem.  
+Also, a firewall configuration on the VMs will close all the ports not needed for our purpose.  
 
 ### Docker Swarm
 
-This playbook configures the docker swarm.
-In the **inventory.file**:
+This playbook configures the docker swarm.  
+In the **inventory.file**:  
 ```
 # Application servers
 [docker_swarm_manager]
@@ -104,31 +105,31 @@ In the **inventory.file**:
 docker_swarm_manager
 docker_swarm_worker
 
-# Variables that will be applied to all servers
+# Variables that will be applied to all servers  
 [cluster:vars]
 ansible_user=vagrant
 ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
 ```
-There is a naming convention used for the docker swarm configuration.
-The **docker_swarm_manager** defines all the manager nodes. Instead, the **docker_swarm_worker** defines all the worker nodes. 
-By default, the first manager node will be the leader of the cluster.
-In the playbook, the creation of the docker swarm follows the official docker documentation. Be sure to install the collection mentioned in the configuration because it will install the service used in the playbook.
-The join token ensures that all the worker nodes will join the cluster securely because there is a **tls** encryption by default. You can rotate the key, but the manager node manages the CA via join token by default.
+There is a naming convention used for the docker swarm configuration.  
+The **docker_swarm_manager** defines all the manager nodes. Instead, the **docker_swarm_worker** defines all the worker nodes.   
+By default, the first manager node will be the leader of the cluster.  
+In the playbook, the creation of the docker swarm follows the official docker documentation. Be sure to install the collection mentioned in the configuration because it will install the service used in the playbook.  
+The join token ensures that all the worker nodes will join the cluster securely because there is a **tls** encryption by default. You can rotate the key, but the manager node manages the CA via join token by default.  
 
 ### Docker Swarm Sample App
-In the last playbook, there is a sample app for testing the docker swarm behavior.  
-This app will deploy two services:
-1. **Ghost** application
-2. **Visualizer** application
-The first one is the classical ghost application for blogging.
-The second one is the Visualizer, which will show how the containers are placed among the nodes in the cluster.  
-**Visualizer UI**:
-![image](/visualizer.png)
+In the last playbook, there is a sample app for testing the docker swarm behavior.    
+This app will deploy two services:  
+1. **Ghost** application  
+2. **Visualizer** application  
+The first one is the classical ghost application for blogging.  
+The second one is the Visualizer, which will show how the containers are placed among the nodes in the cluster.    
+**Visualizer UI**:  
+![image](/visualizer.png)  
 ## CI
-For testing purposes, there are two configurations in the repository.
-First the **ansible-lint** configured in the **.ansible-lint** file. This step ensures that all the playbook files are well written (the configuration skips checking the roles directory).
-The second step is the molecule testing that will test via docker container the tasks defined above.
-The Github action configures these two steps and ensures that they will be triggered each time new code is pushed in the repository. Thus, every time something fails, the build will be marked as failed, and a status badge will show the status in the README file.
+For testing purposes, there are two configurations in the repository.  
+First the **ansible-lint** configured in the **.ansible-lint** file. This step ensures that all the playbook files are well written (the configuration skips checking the roles directory).  
+The second step is the molecule testing that will test via docker container the tasks defined above.  
+The Github action configures these two steps and ensures that they will be triggered each time new code is pushed in the repository. Thus, every time something fails, the build will be marked as failed, and a status badge will show the status in the README file.  
 
 
 
