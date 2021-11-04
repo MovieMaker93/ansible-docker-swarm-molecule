@@ -1,4 +1,4 @@
-![example workflow](https://github.com/MovieMaker93/ansible-docker-swarm-molecule/actions/workflows/ci.yml/badge.svg)
+![example workflow](https://github.com/MovieMaker93/ansible-docker-swarm-molecule/actions/workflows/ci.yml/badge.svg) ![example event parameter](https://github.com/MovieMaker93/ansible-docker-swarm-molecule/actions/workflows/ci.yml/badge.svg?event=push_request)
 
 # ansible-docker-swarm-molecule
 
