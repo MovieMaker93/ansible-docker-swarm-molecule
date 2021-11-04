@@ -1,4 +1,4 @@
-![example workflow](https://github.com/MovieMaker93/ansible-docker-swarm-molecule/actions/workflows/ci.yml/badge.svg) ![example event parameter](https://github.com/MovieMaker93/ansible-docker-swarm-molecule/actions/workflows/ci.yml/badge.svg?event=push_request)
+![example workflow](https://github.com/MovieMaker93/ansible-docker-swarm-molecule/actions/workflows/ci.yml/badge.svg)
 
 # ansible-docker-swarm-molecule
 
@@ -14,11 +14,11 @@ The docker daemon is configured in order to garuantee at least 40gb of space, if
 4. Import the collection defined in the requirement.txt file
 
 The **Vagrant** file is used to configure the 2VMs centos7.
-'''
+```
 vagrant up 
-'''
+```
 This command allow you to spin up the machine on **Virtualbox** and after that will start also the ansible provisioner defined here:
-'''
+```
 
  machine.vm.provision :ansible do |ansible|
           ansible.inventory_path = "inventory/inventory.ini"
@@ -26,17 +26,17 @@ This command allow you to spin up the machine on **Virtualbox** and after that w
           ansible.limit = "all"
           ansible.become = true
         end
-'''
+```
 
 In case you want to run only the provisioner just run the command 
-'''
+```
 vagrant provision
-'''
+```
 
 For importing the collection run:
-'''
+```
 ansible-galaxy install -r requirements.txt
-'''
+```
 ## Ansible Configuration
 
 The core of ansible configuration is defined inside the configure.yml.
@@ -46,7 +46,7 @@ First of all ansible will run the docker-certficiate, because for securing docke
 After there is a configuration for storing on your local machine the client.key of the first manager configured in the inventory file.
 ### Docker configuration
 The second playbook will configure docker with daemon secured via TLS. The docker daemon configuration is specifed in the vars.yml file under the docker folder:
-'''yml
+```yml
 docker_daemon_options:
   storage-driver: "devicemapper"
   debug: true
@@ -57,22 +57,22 @@ docker_daemon_options:
   tlskey: "/etc/docker/server-key.pem"
   tlscacert: "/etc/docker/ca.pem"
   tlsverify: true
-'''
+```
 Basically the **storage.opts** ensures a basesize for docker of atleast 40gb, then the **tls** configuration defines the key, and the hosts of docker daemon (you can contact the daemon on the machine itself or via https from outside passing the proper client key).
 In order to contact docker from your local machine you have to configure:
 
-''' EXPORT DOCKER_TLS_VERIFY = true '''
-''' EXPORT DOCKER_HOST = tcp://<ip_of_your_first_nabager>:2376 '''
+``` EXPORT DOCKER_TLS_VERIFY = true ```
+``` EXPORT DOCKER_HOST = tcp://<ip_of_your_first_nabager>:2376 ```
 
 By default the previous playbook will copy the client.key in the **~/.docker**, so you can run all the docker commands without specifing the exact path of the client keys.
-Be sure to run ''' docker info ''' and see if you can contact the daemon without any problem.
+Be sure to run ``` docker info ``` and see if you can contact the daemon without any problem.
 Also there is a firewall configuration on the VMs that will close all the port not needed for our purpose.
 
 ### Docker Swarm
 
 In the last playbook there is all the docker swarm configuration.
 In the inventory.file:
-'''
+```
 # Application servers
 [docker_swarm_manager]
 192.168.60.4 host_daemon_tcp="tcp://192.168.60.4:2376" dds_host=192.168.60.4
@@ -88,7 +88,7 @@ docker_swarm_worker
 [cluster:vars]
 ansible_user=vagrant
 ansible_ssh_private_key_file=~/.vagrant.d/insecure_private_key
-'''
+```
 There is a naming convention used for the docker swarm configuration.
 All the manager nodes are defined under **docker_swarm_manager** name, instead all the worker nodes are defined under **docker_swarm_worker**. By default the first manager node will be the leader of the cluster.
 In the playbook there are all the steps suggested by the official docker documentation.
