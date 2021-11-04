@@ -8,10 +8,10 @@ The docker daemon configuration guarantees at least 40GB of space, if accessible
 
 ## Prerequisites
 
-1. Vagrant
-2. Virtualbox
+1. Vagrant 2.2.18
+2. Virtualbox 6.1
 3. Ansible 2.11 core version
-4. Import the collection defined in the requirement.txt file
+4. Import the collection defined in the **requirement.yml** file
 
 The **Vagrant** file represents the configuration of the 2VMs centos7.  
 ```
@@ -35,7 +35,7 @@ vagrant provision
 
 For importing the collection run:  
 ```
-ansible-galaxy install -r requirements.txt
+ansible-galaxy install -r requirements.yml
 ```
 ## Ansible Configuration
 ### Project Structure
