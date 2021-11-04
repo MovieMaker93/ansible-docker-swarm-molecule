@@ -56,7 +56,6 @@ The project used four roles:
 3. geerlingguy.firewall
 4. alexinthesky.secure-docker-daemon
 
-The **geerlingguy.docker** and **alexinthesky.secure-docker-daemon** have been customized to meet my requirements, so I have putted the roles inside a custom directory and not install directly via galaxy.  
 The **geerlingguy.docker** and **alexinthesky.secure-docker-daemon** have been customized to meet my requirements, so I have put the roles inside a custom directory and not install directly via Galaxy.  
 Also I have defined the **roles_path** and the **inventory** directory inside the **ansible.cfg** file.  
 
