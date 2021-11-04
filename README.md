@@ -1,3 +1,5 @@
+![example workflow](https://github.com/MovieMaker93/ansible-docker-swarm-molecule/actions/workflows/ci.yml/badge.svg)
+
 # ansible-docker-swarm-molecule
 
 This project aims to spin up 2 VMs centos-7 with Vagrant and Virtualbox.
