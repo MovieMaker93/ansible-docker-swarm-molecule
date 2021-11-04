@@ -124,7 +124,7 @@ The first one is the classical ghost application for blogging.
 The second one is the Visualizer, which will show how the containers are placed among the nodes in the cluster.    
 **Visualizer UI**:  
 ![image](/visualizer.png)  
-## CI
+## CI Configuration
 For testing purposes, there are two configurations in the repository.   
 First the **ansible-lint** configured in the **.ansible-lint** file.   
 This step ensures that all the playbook files are well written (the configuration skips checking the roles directory).   
