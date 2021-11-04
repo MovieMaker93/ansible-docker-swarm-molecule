@@ -125,10 +125,15 @@ The second one is the Visualizer, which will show how the containers are placed 
 **Visualizer UI**:  
 ![image](/visualizer.png)  
 ## CI
-For testing purposes, there are two configurations in the repository.  
-First the **ansible-lint** configured in the **.ansible-lint** file. This step ensures that all the playbook files are well written (the configuration skips checking the roles directory).  
-The second step is the molecule testing that will test via docker container the tasks defined above.  
-The Github action configures these two steps and ensures that they will be triggered each time new code is pushed in the repository. Thus, every time something fails, the build will be marked as failed, and a status badge will show the status in the README file.  
+For testing purposes, there are two configurations in the repository.   
+First the **ansible-lint** configured in the **.ansible-lint** file.   
+This step ensures that all the playbook files are well written (the configuration skips checking the roles directory).   
+The second step is the **molecule testing** that will test via docker container the task **docker-certificate**.  
+
+The Github action **ci.yml** configures these two jobs and ensures that they will be triggered each time new code is pushed in the repository.  
+First job called **linting** will run the linting on all the playbooks inside the folder **/playbooks**.   
+Second job called **molecule** will test in a docker container the creation of certificate and required packeges (docker-certificate playbook).    
+Thus, every time something fails, the build will be marked as failed, and a status badge will show the status in the README file.  
 
 
 
