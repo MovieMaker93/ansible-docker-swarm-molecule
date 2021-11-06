@@ -21,7 +21,7 @@ ansible-galaxy install -r requirements.yml
 ## How to Test
 
 The **Vagrant** file represents the configuration of the 2VMs centos7. 
-In the root directory launch the command:   
+In the root directory, launch the command:   
 ```
 vagrant up 
 ```
@@ -36,10 +36,14 @@ This command allows you to spin up the VMs on **Virtualbox** and after that will
         end
 ```
 
-In case you want to run only the provisioner (you have already on the VMs), just run the command:  
+In case you want to run only the provisioner (you have already up the VMs), just run the command:  
 ```
 vagrant provision
 ```
+In case you want to destroy the two virtual machines, just run the command:  
+```
+vagrant destroy
+```  
 
 ## Ansible Configuration
 ### Project Structure
