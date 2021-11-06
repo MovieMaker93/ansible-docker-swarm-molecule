@@ -83,7 +83,7 @@
         dest: "{{ dds_env_shell_path }}/docker_env.sh"
         mode: 0755
       when: dds_install_shell
-      tag: skip_this_rule
+      tags: skip_this_rule
 
     - name: Force systemd to reread configs
       systemd:
