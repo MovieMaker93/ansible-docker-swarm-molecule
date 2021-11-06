@@ -27,19 +27,16 @@
       file:
         state: directory
         path: "{{ dds_temp_path }}"
-      tags: skip_this_rule
 
     - name: Remove passphrase file, if it exists
       file:
         state: absent
         path: "{{ dds_passphrase_file }}"
-      tags: skip_this_rule
 
     - name: Create passphrase file
       file:
         state: touch
         path: "{{ dds_passphrase_file }}"
-        mode: 0644
 
     - name: Add passphrase to the file
       lineinfile:
@@ -48,13 +45,13 @@
 
     - name: Check if cacert is present
       stat: path={{ dds_server_cert_path }}/ca.pem
-      register: cacert 
+      register: cacert
 
     - name: Generate ca-key.pem
       command: "openssl genrsa -aes256 -passout file:{{ dds_passphrase_file }} -out {{ dds_temp_path }}/ca-key.pem 4096"
       when: not cacert.stat.exists
 
-    - name: Generate ca certificate  
+    - name: Generate ca certificate
       command: "{{ generate_ca_certificate }}"
       when: not cacert.stat.exists
 
@@ -83,7 +80,6 @@
         dest: "{{ dds_env_shell_path }}/docker_env.sh"
         mode: 0755
       when: dds_install_shell
-      tags: skip_this_rule
 
     - name: Force systemd to reread configs
       systemd:

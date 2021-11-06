@@ -5,5 +5,5 @@ exclude_paths:
 
 # This makes linter to fully ignore rules/tags listed below
 skip_list:
-  - skip_this_rule
-  - git-latest
+  - '404'
+  - '208'
