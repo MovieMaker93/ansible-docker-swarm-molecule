@@ -27,46 +27,47 @@
       file:
         state: directory
         path: "{{ dds_temp_path }}"
+      tags: skip_this_rule
 
     - name: Remove passphrase file, if it exists
       file:
         state: absent
         path: "{{ dds_passphrase_file }}"
-
+      tags: skip_this_rule
 
     - name: Create passphrase file
       file:
         state: touch
-        path: "{{ dds_passphrase_file }}" 
+        path: "{{ dds_passphrase_file }}"
         mode: 0644
 
     - name: Add passphrase to the file
       lineinfile:
         dest: "{{ dds_passphrase_file }}"
-        line: "{{ dds_passphrase }}" 
+        line: "{{ dds_passphrase }}"
 
     - name: Check if cacert is present
-      stat: path={{ dds_server_cert_path }}/ca.pem 
+      stat: path={{ dds_server_cert_path }}/ca.pem
       register: cacert 
 
     - name: Generate ca-key.pem
       command: "openssl genrsa -aes256 -passout file:{{ dds_passphrase_file }} -out {{ dds_temp_path }}/ca-key.pem 4096"
       when: not cacert.stat.exists
 
-    - name: Generate ca certificate   
-      command: "openssl req -new -x509 -days 365 -key {{ dds_temp_path }}/ca-key.pem -sha256 -out {{ dds_temp_path }}/ca.pem -passin file:{{ dds_passphrase_file }} -subj '/C={{ dds_country }}/ST={{ dds_state }}>/L={{ dds_locality }}/O={{ dds_organization }}/CN={{ dds_common_name }}'"
+    - name: Generate ca certificate  
+      command: "{{ generate_ca_certificate }}"
       when: not cacert.stat.exists
 
     - name: Check if servercert is present
-      stat: path={{ dds_server_cert_path }}/server-cert.pem 
-      register: servercert 
+      stat: path={{ dds_server_cert_path }}/server-cert.pem
+      register: servercert
 
     - include: generate_server_certs.yml
       when: not servercert.stat.exists
 
     - name: Check if clientcert is present
-      stat: path={{ dds_client_cert_path }}/cert.pem 
-      register: clientcert 
+      stat: path={{ dds_client_cert_path }}/cert.pem
+      register: clientcert
 
     - include: generate_client_certs.yml
       when: not clientcert.stat.exists

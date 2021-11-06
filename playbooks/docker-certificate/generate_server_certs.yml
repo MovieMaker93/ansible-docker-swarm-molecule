@@ -5,7 +5,7 @@
   changed_when: false
 
 - name: Create the server CSR
-  command: "openssl req -subj '/CN={{ dds_host | default('127.0.0.1') }}' -sha256 -new -key {{ dds_temp_path }}/server-key.pem -out {{ dds_temp_path }}/server.csr"
+  command: "{{ create_server_csr }}"
   changed_when: false
 
 - name: Remove extfile
@@ -27,11 +27,13 @@
 
 - name: Create the server certificate
   command: "{{ create_server_certificate }}"
+  changed_when: false
 
 - name: Check that the server cert path exists
   file:
     state: directory
     path: "{{ dds_server_cert_path }}"
+  tags: skip_this_rule
 
 - name: Copy server certs
   command: cp "{{ dds_temp_path }}/{{ item }}" "{{ dds_server_cert_path }}/."
@@ -39,6 +41,7 @@
     - ca.pem
     - server-cert.pem
     - server-key.pem
+  changed_when: false
 
 - name: Set file permissions for keys
   file:

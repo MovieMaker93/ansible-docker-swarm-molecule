@@ -47,6 +47,7 @@
     - ca.pem
     - cert.pem
     - key.pem
+  tags: skip_this_rule
 
 
 - name: Set file permissions for keys
