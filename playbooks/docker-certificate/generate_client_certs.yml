@@ -5,7 +5,7 @@
   changed_when: false
 
 
-- name: Create client CSR 
+- name: Create client CSR
   command: "openssl req -subj '/CN=client' -new -key {{ dds_temp_path }}/key.pem -out {{ dds_temp_path }}/client.csr"
   changed_when: false
 
@@ -29,7 +29,7 @@
     line: "extendedKeyUsage = clientAuth"
 
 
-- name: Create the client certificate 
+- name: Create the client certificate
   command: "{{ create_client_certificate }}"
   changed_when: false
 
@@ -57,7 +57,7 @@
     - key.pem
 
 
-- name: Set file permissions 
+- name: Set file permissions
   file:
     path: "{{ dds_client_cert_path }}/{{ item }}"
     mode: 0444
