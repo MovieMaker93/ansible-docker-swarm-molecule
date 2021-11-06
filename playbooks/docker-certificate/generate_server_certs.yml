@@ -5,7 +5,7 @@
   changed_when: false
 
 - name: Create the server CSR 
-  command: "openssl req -subj '/CN={{ dds_host }}' -sha256 -new -key {{ dds_temp_path }}/server-key.pem -out {{ dds_temp_path }}/server.csr"
+  command: "openssl req -subj '/CN={{ dds_host | default('127.0.0.1') }}' -sha256 -new -key {{ dds_temp_path }}/server-key.pem -out {{ dds_temp_path }}/server.csr"
   changed_when: false
 
 - name: Remove extfile

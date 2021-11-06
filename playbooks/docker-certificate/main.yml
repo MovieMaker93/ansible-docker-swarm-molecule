@@ -27,16 +27,19 @@
       file:
         state: directory
         path: "{{ dds_temp_path }}"   
+        mode: 0644
 
     - name: Remove passphrase file, if it exists
       file:
         state: absent
         path: "{{ dds_passphrase_file }}" 
+        mode: 0644
 
     - name: Create passphrase file
       file:
         state: touch
         path: "{{ dds_passphrase_file }}" 
+        mode: 0644
 
     - name: Add passphrase to the file
       lineinfile:
@@ -80,6 +83,7 @@
         dest: "{{ dds_env_shell_path }}/docker_env.sh"
         mode: 0755
       when: dds_install_shell
+      tag: skip_this_rule
 
     - name: Force systemd to reread configs
       systemd:
