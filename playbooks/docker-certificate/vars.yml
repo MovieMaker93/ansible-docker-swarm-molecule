@@ -6,7 +6,7 @@ openssl_packages:
   - ca-certificates
 dds_client_cert_path: ~/.docker
 dds_system_tmp: /tmp
-dds_common_name: "{{ dds_host }}"
+dds_common_name: "{{ dds_host | default('127.0.0.1')}}"
 dds_passphrase: Test123! 
 dds_server_cert_path: /etc/docker
 dds_env_shell_path: "~"
