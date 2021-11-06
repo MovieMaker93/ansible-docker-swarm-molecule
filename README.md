@@ -13,11 +13,19 @@ The docker daemon configuration guarantees at least 40GB of space, if accessible
 3. Ansible 2.11 core version
 4. Import the collection defined in the **requirement.yml** file
 
-The **Vagrant** file represents the configuration of the 2VMs centos7.  
+For importing the collection run:  
+```
+ansible-galaxy install -r requirements.yml
+```
+  
+## How to Test
+
+The **Vagrant** file represents the configuration of the 2VMs centos7. 
+In the root directory launch the command:   
 ```
 vagrant up 
 ```
-This command allows you to spin up the machine on **Virtualbox** and after that will also start the ansible provisioner defined here:  
+This command allows you to spin up the VMs on **Virtualbox** and after that will also start the ansible provisioner defined here:  
 ```
 
  machine.vm.provision :ansible do |ansible|
@@ -28,15 +36,11 @@ This command allows you to spin up the machine on **Virtualbox** and after that 
         end
 ```
 
-In case you want to run only the provisioner, just run the command:  
+In case you want to run only the provisioner (you have already on the VMs), just run the command:  
 ```
 vagrant provision
 ```
 
-For importing the collection run:  
-```
-ansible-galaxy install -r requirements.yml
-```
 ## Ansible Configuration
 ### Project Structure
 The core of ansible configuration is defined inside **configure.yml**:  
@@ -124,7 +128,7 @@ The first one is the classical ghost application for blogging.
 The second one is the Visualizer, which will show how the containers are placed among the nodes in the cluster.    
 **Visualizer UI**:  
 ![image](/visualizer.png)  
-## CI
+## CI configuration
 For testing purposes, there are two configurations in the repository.   
 First the **ansible-lint** configured in the **.ansible-lint** file.   
 This step ensures that all the playbook files are well written (the configuration skips checking the roles directory).   
