@@ -10,7 +10,7 @@ The docker daemon configuration guarantees at least 40GB of space, if accessible
 
 1. Vagrant 2.2.18
 2. Virtualbox 6.1
-3. Ansible 2.11 core version
+3. Ansible 2.9.6 and Ansible Core 2.11 
 4. Import the collection defined in the **requirement.yml** file
 
 For importing the collection run:  
@@ -54,13 +54,12 @@ The core of ansible configuration is defined inside **configure.yml**:
 ```
 This file imports all the custom playbooks that are located in the **playbooks** folder.  
 All the roles are inside the folder **roles**.  
-The project used four roles:
+The project uses three roles:
 1. geerlingguy.docker
 2. geerlingguy.pip
 3. geerlingguy.firewall
-4. alexinthesky.secure-docker-daemon
 
-The **geerlingguy.docker** and **alexinthesky.secure-docker-daemon** have been customized to meet my requirements, so I have put the roles inside a custom directory and not install directly via Galaxy.  
+The **geerlingguy.docker** has been customized to meet my requirements, so I have put the roles inside a custom directory and not install directly via Galaxy.  
 Also I have defined the **roles_path** and the **inventory** directory inside the **ansible.cfg** file.  
 
 ### Docker certficate
