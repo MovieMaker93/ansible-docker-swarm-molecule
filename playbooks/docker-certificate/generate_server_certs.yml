@@ -2,19 +2,23 @@
 
 - name: Create server key
   command: openssl genrsa -out {{ dds_temp_path }}/server-key.pem 4096
+  changed_when: false
 
 - name: Create the server CSR 
   command: "openssl req -subj '/CN={{ dds_host }}' -sha256 -new -key {{ dds_temp_path }}/server-key.pem -out {{ dds_temp_path }}/server.csr"
+  changed_when: false
 
 - name: Remove extfile
   file:
     state: absent
     path: "{{ dds_extfile }}" 
+    mode: 0644
 
 - name: Create extfile
   file:
     state: touch 
-    path: "{{ dds_extfile }}" 
+    path: "{{ dds_extfile }}"
+    mode: 0644 
 
 - name: Add alt name to extfile
   lineinfile:
@@ -22,7 +26,7 @@
     line: "subjectAltName = IP:{{ dds_host }},IP:127.0.0.1"
 
 - name: Create the server certificate 
-  command: "openssl x509 -req -days 365 -sha256 -in {{ dds_temp_path }}/server.csr -CA {{ dds_temp_path }}/ca.pem -CAkey {{ dds_temp_path }}/ca-key.pem -CAcreateserial -out {{ dds_temp_path}}/server-cert.pem -extfile {{ dds_temp_path}}/extfile.cnf -passin file:{{ dds_passphrase_file }}"
+  command: "{{ create_server_certificate }}"
 
 - name: Check that the server cert path exists
   file:

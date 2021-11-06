@@ -49,25 +49,25 @@
 
     - name: Generate ca-key.pem
       command: "openssl genrsa -aes256 -passout file:{{ dds_passphrase_file }} -out {{ dds_temp_path }}/ca-key.pem 4096"
-      when: cacert.stat.exists == False
+      when: not cacert.stat.exists
 
     - name: Generate ca certificate   
-      command: "openssl req -new -x509 -days 365 -key {{ dds_temp_path }}/ca-key.pem -sha256 -out {{ dds_temp_path }}/ca.pem -passin file:{{ dds_passphrase_file }} -subj '/C={{ dds_country }}/ST={{dds_state }}>/L={{ dds_locality }}/O={{ dds_organization }}/CN={{ dds_common_name }}'"
-      when: cacert.stat.exists == False
+      command: "openssl req -new -x509 -days 365 -key {{ dds_temp_path }}/ca-key.pem -sha256 -out {{ dds_temp_path }}/ca.pem -passin file:{{ dds_passphrase_file }} -subj '/C={{ dds_country }}/ST={{ dds_state }}>/L={{ dds_locality }}/O={{ dds_organization }}/CN={{ dds_common_name }}'"
+      when: not cacert.stat.exists
 
     - name: Check if servercert is present
       stat: path={{ dds_server_cert_path }}/server-cert.pem 
       register: servercert 
 
     - include: generate_server_certs.yml
-      when: servercert.stat.exists == False
+      when: not servercert.stat.exists
 
     - name: Check if clientcert is present
       stat: path={{ dds_client_cert_path }}/cert.pem 
       register: clientcert 
 
     - include: generate_client_certs.yml
-      when: clientcert.stat.exists == False
+      when: not clientcert.stat.exists
 
     - name: Remove the temp directory
       file:
