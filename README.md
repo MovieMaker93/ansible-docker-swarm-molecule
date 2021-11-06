@@ -65,8 +65,8 @@ Also I have defined the **roles_path** and the **inventory** directory inside th
 ### Docker certficate
 First of all, ansible will run the docker-certificate playbook for securing docker via TLS encryption.   
 There is a pre-task configuration to ensure that the OpenSSL package and all the folders required for docker have been installed.    
-The role **alexinthesky.secure-docker-daemon** generates all the server and client keys with OpenSSL for the docker daemon.    
-In the end, ansible will copy the client key of your first node manager to your local machine.  
+The playbook **docker-certificate/main.yml** generates all the server and client keys with OpenSSL for the docker daemon.    
+In the end, ansible will copy the client key of your first node manager to your local machine with **docker-certificate/manager-certificate.yml** playbook.  
 ### Docker configuration
 The second playbook will configure docker with daemon secured via **TLS**. The docker daemon configuration is specifed in the vars.yml file under the docker folder:  
 ```yml
