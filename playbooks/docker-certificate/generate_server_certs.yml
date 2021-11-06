@@ -23,7 +23,7 @@
 - name: Add alt name to extfile
   lineinfile:
     dest: "{{ dds_extfile }}" 
-    line: "subjectAltName = IP:{{ dds_host }},IP:127.0.0.1"
+    line: "subjectAltName = IP:{{ dds_host | default('127.0.0.1') }},IP:127.0.0.1"
 
 - name: Create the server certificate 
   command: "{{ create_server_certificate }}"
