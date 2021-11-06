@@ -5,3 +5,17 @@ openssl_packages:
   - libffi-devel
   - ca-certificates
 dds_client_cert_path: ~/.docker
+dds_system_tmp: /tmp
+dds_common_name: "{{ dds_host }}"
+dds_passphrase: Test123! 
+dds_server_cert_path: /etc/docker
+dds_env_shell_path: "~"
+dds_install_shell: yes
+dds_country: IT
+dds_state: Campania
+dds_locality: Eboli
+dds_organization: My Corporation
+dds_temp_path: "{{ dds_system_tmp }}/ansible_dds"
+dds_passphrase_file: "{{ dds_temp_path }}/passphrase.txt"
+dds_csr_form_file: "{{ dds_temp_path }}/csr_form.txt"
+dds_extfile: "{{ dds_temp_path }}/extfile.cnf"
