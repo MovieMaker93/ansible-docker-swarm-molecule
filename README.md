@@ -27,7 +27,7 @@ This plugin ensures that each VM has at least 80Gb disk space.
 ## How to Test
 
 The **Vagrant** file represents the configuration of the 2VMs centos7. 
-In the root directory launch the command:   
+In the root directory, launch the command:   
 ```
 vagrant up 
 ```
@@ -42,10 +42,14 @@ This command allows you to spin up the VMs on **Virtualbox** and after that will
         end
 ```
 
-In case you want to run only the provisioner (you have already on the VMs), just run the command:  
+In case you want to run only the provisioner (you have already up the VMs), just run the command:  
 ```
 vagrant provision
 ```
+In case you want to destroy the two virtual machines, just run the command:  
+```
+vagrant destroy
+```  
 
 ## Ansible Configuration
 ### Project Structure
@@ -71,8 +75,8 @@ Also I have defined the **roles_path** and the **inventory** directory inside th
 ### Docker certficate
 First of all, ansible will run the docker-certificate playbook for securing docker via TLS encryption.   
 There is a pre-task configuration to ensure that the OpenSSL package and all the folders required for docker have been installed.    
-The role **alexinthesky.secure-docker-daemon** generates all the server and client keys with OpenSSL for the docker daemon.    
-In the end, ansible will copy the client key of your first node manager to your local machine.  
+The playbook **docker-certificate/main.yml** generates all the server and client keys with OpenSSL for the docker daemon.    
+In the end, ansible will copy the client key of your first node manager to your local machine with **docker-certificate/manager-certificate.yml** playbook.  
 ### Docker configuration
 The second playbook will configure docker with daemon secured via **TLS**. The docker daemon configuration is specifed in the vars.yml file under the docker folder:  
 ```yml
