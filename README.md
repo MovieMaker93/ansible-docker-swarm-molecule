@@ -12,12 +12,18 @@ The docker daemon configuration guarantees at least 40GB of space, if accessible
 2. Virtualbox 6.1
 3. Ansible 2.9.6 and Ansible Core 2.11 
 4. Import the collection defined in the **requirement.yml** file
+5. Vagrant plugin **vagrant-disksize**
 
 For importing the collection run:  
 ```
 ansible-galaxy install -r requirements.yml
 ```
-  
+For installing the plugin run:
+```
+vagrant plugin install vagrant-disksize
+```
+
+This plugin ensures that each VM has at least 80Gb disk space.  
 ## How to Test
 
 The **Vagrant** file represents the configuration of the 2VMs centos7. 
